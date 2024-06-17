@@ -5,7 +5,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import './sportsbook.css'
 import './App.css';
-import Bets from "./Bets";
 import cookie from 'cookie';
 
 const Home = () => {
@@ -39,7 +38,6 @@ const Home = () => {
                 <h3>Explore All Your Beloved Teams!</h3>
                 <h4>Dive Into The Action On The Upcoming NFL Season Below!</h4>
                 <Link to="/nfl" className="homeButton">NFL LINES HERE!</Link>
-                <Bets userId={userId} />
             </div>          
         </div>   
     )

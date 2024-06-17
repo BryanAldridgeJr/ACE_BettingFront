@@ -67,7 +67,7 @@ const Nfl = () => {
     const placedBet = (time, team) => {
       const cookies = cookie.parse(document.cookie)
       console.log(time, team)
-      axios.post('http://localhost:8081/placed', {
+      axios.post('https://ace-betting-final.vercel.app/placed', {
         id: cookies.id,
         time,
         name: team.team,
