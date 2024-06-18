@@ -39,9 +39,9 @@ function Login() {
     }
 
     return (
-        <div id='logindiv' className='d-flex justify-content-center align-items-center bg-primary vh-100'>
+        <div id='logindiv' className='d-flex justify-content-center align-items-center  vh-100 '>
             <h2 className='h2login'>ACE Betting</h2>
-            <div className='bg-white p-3 rounded w-25'>
+            <div className='bg-white p-3 rounded w-80'>
                 <h3>Login</h3>
                 <form action="" onSubmit={handleSubmit}>
                     <div className='mb-3'>

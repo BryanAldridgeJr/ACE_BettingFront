@@ -8,7 +8,7 @@ function Validation(values) {
         error.email = "Email Should NOT Be Empty"
     }
     else if (!email_pattern.test(values.email)) {
-        error.email = "Email is not valid";
+        error.email = "Email is not valid, Please Sign Up Below.";
     }else {
         error.email = ""
     }
