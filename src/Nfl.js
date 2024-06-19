@@ -110,7 +110,7 @@ const Nfl = () => {
                   <span id='divTimesSpan'>{new Date(game.time).toLocaleString()}</span>
                 </div>
                 {game.odds.map(team => (
-                  <div onClick={() => placedBet(game.time, team)} key={team.team} className='divTeam'>
+                  <div onClick={() => {placedBet(game.time, team); alert(`${team.team} ${team.price} has been saved on your Profile!`); }} key={team.team} className='divTeam'>
                     <div className='divTeams'>
                       <span>{team.team}</span>
                     </div>

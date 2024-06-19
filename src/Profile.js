@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SportsFootballIcon from '@mui/icons-material/SportsFootball';
@@ -11,14 +10,16 @@ import cookie from 'cookie';
 
 const Profile = () => {
     const [userBets, setUserBets] = useState([]);
+    const [userInfo, setUserInfo] = useState(null); 
     const [error, setError] = useState(null);
 
+    
     useEffect(() => {
         const fetchUserBets = async () => {
             try {
                 const cookies = cookie.parse(document.cookie);
-                const response = await axios.get(`https://ace-betting-final.vercel.app/bets/${cookies.id}`);
-                const uniqueBets = response.data.data.filter((bet, index, self) =>
+                const responseBets = await axios.get(`https://ace-betting-final.vercel.app/bets/${cookies.id}`);
+                const uniqueBets = responseBets.data.data.filter((bet, index, self) =>
                     index === self.findIndex((b) => b.name === bet.name && b.price === bet.price && b.time === bet.time)
                 );
                 setUserBets(uniqueBets);
@@ -31,21 +32,22 @@ const Profile = () => {
         fetchUserBets();
     }, []);
 
-    const handleDeleteBet = async (betId) => {
-        try {
-            await axios.delete(`https://ace-betting-final.vercel.app/delete-bet/${betId}`);
-            // Refetch user bets after deletion
-            const cookies = cookie.parse(document.cookie);
-            const response = await axios.get(`https://ace-betting-final.vercel.app/bets/${cookies.id}`);
-            const uniqueBets = response.data.data.filter((bet, index, self) =>
-                index === self.findIndex((b) => b.name === bet.name && b.price === bet.price && b.time === bet.time)
-            );
-            setUserBets(uniqueBets);
-        } catch (error) {
-            setError(error);
-            console.error('Error deleting bet:', error);
-        }
-    };
+    // Fetch user information
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const cookies = cookie.parse(document.cookie);
+                const responseInfo = await axios.get(`https://ace-betting-final.vercel.app/user-info/${cookies.id}`);
+                setUserInfo(responseInfo.data.data);
+            } catch (error) {
+                setError(error);
+                console.error('Error fetching user info:', error);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
+
 
     return (
         <div className='everything'>
@@ -83,7 +85,6 @@ const Profile = () => {
                                 <span>{new Date(bet.time).toLocaleDateString('en-US')}</span> &nbsp;&nbsp;
                                 <span>{bet.name}</span> &nbsp;&nbsp;
                                 <span>{bet.price}</span>
-                                {/*<button onClick={() => handleDeleteBet(bet.id)}>Delete</button> */}
                             </div>
                         ))
                     ) : (
@@ -94,15 +95,21 @@ const Profile = () => {
                 </div>
                 <div className='profileDiv'>
                     <h2 className='profileh2'>Account Information</h2>
-                    <p className='emailname' >Name: &nbsp;</p>
-                    <p className='emailname'>Email: &nbsp; </p>
-                    
+                    {userInfo ? (
+                        <>
+                            <p className='emailname'>Name: {userInfo.name}</p>
+                            <p className='emailname'>Email: {userInfo.email}</p>
+                        </>
+                    ) : (
+                        <p>Loading user information...</p>
+                    )}
                 </div>
+            </div>
+            <div className='profileLink'>
+                <Link to="/" className="homeButton">SIGN OUT</Link>
             </div>
         </div>
     );
 };
 
 export default Profile;
-
-

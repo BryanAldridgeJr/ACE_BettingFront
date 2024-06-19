@@ -9,7 +9,6 @@ import './App.css';
 
 function App() {
 
-  /*const isAuthenticated = false;*/
 
   return (
     <BrowserRouter>
